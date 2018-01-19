@@ -20,18 +20,18 @@ def receiveHook():
     # Member관련 Event를 print
     if event == 'member':
         if data['action'] == 'created':
-            print 'A new collaborator has been added!'
+            print '신규 Collaborator 추가되었습니다.'
         if data['action'] == 'deleted':
-            print 'A collaborator has left the repository! :('
+            print 'Collaborator가 삭제되었습니다.'
     
     # Org 관련 Event를 print
     if event == 'organization':
         if data['action'] == 'created': # ORG 생성 감지
-            print 'An organization has been created, this is where you send MChat a request!'
+            print '신규 organization 추가되었습니다.'
         if data['action'] == 'member_added': # ORG 멤버 추가 감지
-            print 'a member was added to the organization!'
+            print 'organization 멤버 추가되었습니다.'
         if data['action'] == 'member_removed': # ORG 멤버 삭제 감지
-            print 'a member was REMOVED from the organization!'
+            print 'organization 멤버 삭제되었습니다.'
     
     if print_data_yn:
         print json.dumps(request.json)
