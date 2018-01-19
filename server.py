@@ -16,7 +16,9 @@ def receiveHook():
         abort(400)
     
     print 'Event name: ' + event
-    print 'Organization: ' + data['organization']['login']
+    if 'organization' in data:
+        print 'Organization: ' + data['organization']['login']
+
     # Member관련 Event를 print
     if event == 'member':
         if data['action'] == 'created':
