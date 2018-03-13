@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 @app.route('/receiveHook', methods=['POST']) 
 def receiveHook():
-    event = request.headers.get('X-GitHub-Event') # Event 정보
-    data = request.json # Payload
-    print_data_yn = False # Request를 콘솔로 print 하려면 True 값으로 수정
+    event = request.headers.get('X-GitHub-Event') # Information on event is received in the header
+    data = request.json # Payload with relevant data
+    print_data_yn = False # Change this value to `True` to print payload to console
 
     if not data:
         abort(400)
@@ -19,21 +19,21 @@ def receiveHook():
     if 'organization' in data:
         print 'Organization: ' + data['organization']['login']
 
-    # Member관련 Event를 print
+    # Print events related to `Member`
     if event == 'member':
         if data['action'] == 'created':
-            print '신규 Collaborator 추가되었습니다.'
+            print 'A new Collaborator has been added.'
         if data['action'] == 'deleted':
-            print 'Collaborator가 삭제되었습니다.'
+            print 'A Collaborator has been deleted.'
     
-    # Org 관련 Event를 print
+    # Print events related to `Organization` (only available on Enterprise versions)
     if event == 'organization':
-        if data['action'] == 'created': # ORG 생성 감지
-            print '신규 organization 추가되었습니다.'
-        if data['action'] == 'member_added': # ORG 멤버 추가 감지
-            print 'organization 멤버 추가되었습니다.'
-        if data['action'] == 'member_removed': # ORG 멤버 삭제 감지
-            print 'organization 멤버 삭제되었습니다.'
+        if data['action'] == 'created':
+            print 'A new organization has been added.'
+        if data['action'] == 'member_added': 
+            print 'A new member has been added to an organization.'
+        if data['action'] == 'member_removed': 
+            print 'A member has been deleted from an organization.'
     
     if print_data_yn:
         print json.dumps(request.json)
